@@ -38,3 +38,11 @@ export async function postJson<TResponse>(
   return (await res.json()) as TResponse;
 }
 
+export async function getJson<TResponse>(path: string): Promise<TResponse> {
+  const res = await fetch(`${API_BASE_URL}${path}`, { method: "GET" });
+  if (!res.ok) {
+    throw new Error(`Request failed (${res.status})`);
+  }
+  return (await res.json()) as TResponse;
+}
+
