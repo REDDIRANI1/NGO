@@ -46,3 +46,17 @@ export async function getJson<TResponse>(path: string): Promise<TResponse> {
   return (await res.json()) as TResponse;
 }
 
+export async function postFile<TResponse>(
+  path: string,
+  fileFieldName: string,
+  file: File,
+): Promise<TResponse> {
+  const form = new FormData();
+  form.append(fileFieldName, file);
+  const res = await fetch(`${API_BASE_URL}${path}`, { method: "POST", body: form });
+  if (!res.ok) {
+    throw new Error(`Request failed (${res.status})`);
+  }
+  return (await res.json()) as TResponse;
+}
+
